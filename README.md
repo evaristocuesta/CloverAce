@@ -1,1 +1,2 @@
-# aspnet-core
+# Clover Ace
+Web App for personal accounting
