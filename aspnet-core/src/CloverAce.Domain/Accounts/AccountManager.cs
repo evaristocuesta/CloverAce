@@ -1,20 +1,15 @@
 ﻿using JetBrains.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp;
-using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 
 namespace CloverAce.Accounts
 {
     public class AccountManager : DomainService
     {
-        private readonly IRepository<Account> _accountRepository;
+        private readonly IAccountRepository _accountRepository;
 
-        public AccountManager(IRepository<Account> accountRepository)
+        public AccountManager(IAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
         }
@@ -23,7 +18,7 @@ namespace CloverAce.Accounts
         {
             Check.NotNullOrWhiteSpace(name, nameof(name));
 
-            var accountExists = await _accountRepository.AnyAsync(x => x.Name == name);
+            var accountExists = await _accountRepository.ExistsAsync(name);
 
             if (accountExists)
             {
@@ -38,9 +33,9 @@ namespace CloverAce.Accounts
             Check.NotNull(account, nameof(account));
             Check.NotNullOrWhiteSpace(name, nameof(name));
 
-            var existingAccount = await _accountRepository.FindAsync(x => x.Name == name && x.Id != account.Id);
+            var existingAccount = await _accountRepository.ExistsOtherAsync(account.Id, name);
 
-            if (existingAccount != null) 
+            if (existingAccount) 
             {
                 throw new AccountAlreadyExistsException(name);
             }
