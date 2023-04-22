@@ -8,12 +8,10 @@ namespace CloverAce.Accounts;
 public class AccountDomainTests : CloverAceDomainTestBase
 {
     private readonly AccountManager _accountManager;
-    private readonly IAccountRepository _accountRepository;
 
     public AccountDomainTests()
     {
         _accountManager = GetRequiredService<AccountManager>();
-        _accountRepository = GetRequiredService<IAccountRepository>();
     }
 
     [Fact]
