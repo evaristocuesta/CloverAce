@@ -45,6 +45,7 @@ jobs:
         run: |
           dotnet tool install --global dotnet-coverage
           dotnet sonarscanner begin /k:"evaristocuesta_CloverAce" /o:"evaristocuesta" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build --no-incremental
-          dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+          dotnet restore aspnet-core
+          dotnet build --no-restore aspnet-core --configuration Release
+          dotnet-coverage collect "dotnet test --no-build --verbosity normal aspnet-core --configuration Release" -f xml -o "coverage.xml"
           dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
