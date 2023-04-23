@@ -25,10 +25,9 @@ public class CloverAceDataSeederContributor
             return;
         }
 
-        var ingDirect = await _accountRepository.InsertAsync(
+        _ = await _accountRepository.InsertAsync(
             await _accountManager.CreateAsync("ING Direct"));
-
-        var evo = await _accountRepository.InsertAsync(
+        _ = await _accountRepository.InsertAsync(
             await _accountManager.CreateAsync("Evo Bank"));
     }
 }
