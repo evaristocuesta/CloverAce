@@ -71,7 +71,7 @@ public class CloverAceHttpApiHostModule : AbpModule
         ConfigureSwaggerServices(context, configuration);
     }
 
-    private void ConfigureAuthentication(ServiceConfigurationContext context)
+    private static void ConfigureAuthentication(ServiceConfigurationContext context)
     {
         context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
     }
@@ -150,7 +150,7 @@ public class CloverAceHttpApiHostModule : AbpModule
             });
     }
 
-    private void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)
+    private static void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)
     {
         context.Services.AddCors(options =>
         {
