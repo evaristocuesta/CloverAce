@@ -52,7 +52,7 @@ public class CloverAceDbMigrationService : ITransientDependency
         await MigrateDatabaseSchemaAsync();
         await SeedDataAsync();
 
-        Logger.LogInformation($"Successfully completed host database migrations.");
+        Logger.LogInformation("Successfully completed host database migrations.");
 
         var tenants = await _tenantRepository.GetListAsync(includeDetails: true);
 
@@ -78,7 +78,7 @@ public class CloverAceDbMigrationService : ITransientDependency
                 await SeedDataAsync(tenant);
             }
 
-            Logger.LogInformation($"Successfully completed {tenant.Name} tenant database migrations.");
+            Logger.LogInformation("Successfully completed {TenantName} tenant database migrations.", tenant.Name);
         }
 
         Logger.LogInformation("Successfully completed all database migrations.");
@@ -88,7 +88,7 @@ public class CloverAceDbMigrationService : ITransientDependency
     private async Task MigrateDatabaseSchemaAsync(Tenant tenant = null)
     {
         Logger.LogInformation(
-            $"Migrating schema for {(tenant == null ? "host" : tenant.Name + " tenant")} database...");
+            "Migrating schema for {TenantName} database...", (tenant == null ? "host" : tenant.Name + " tenant"));
 
         foreach (var migrator in _dbSchemaMigrators)
         {
@@ -98,7 +98,7 @@ public class CloverAceDbMigrationService : ITransientDependency
 
     private async Task SeedDataAsync(Tenant tenant = null)
     {
-        Logger.LogInformation($"Executing {(tenant == null ? "host" : tenant.Name + " tenant")} database seed...");
+        Logger.LogInformation("Executing {TenantName} database seed...", (tenant == null ? "host" : tenant.Name + " tenant"));
 
         await _dataSeeder.SeedAsync(new DataSeedContext(tenant?.Id)
             .WithProperty(IdentityDataSeedContributor.AdminEmailPropertyName, IdentityDataSeedContributor.AdminEmailDefaultValue)
@@ -134,7 +134,7 @@ public class CloverAceDbMigrationService : ITransientDependency
         }
         catch (Exception e)
         {
-            Logger.LogWarning("Couldn't determinate if any migrations exist : " + e.Message);
+            Logger.LogWarning("Couldn't determinate if any migrations exist : {ExceptionMessage}", e.Message);
             return false;
         }
     }
