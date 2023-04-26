@@ -7,7 +7,8 @@ namespace CloverAce.Accounts;
 [Serializable]
 public class AccountAlreadyExistsException : BusinessException
 {
-    public AccountAlreadyExistsException(string name) :base (CloverAceDomainErrorCodes.AccountAlreadyExists)
+    public AccountAlreadyExistsException(string name) 
+        : base (CloverAceDomainErrorCodes.AccountAlreadyExists)
     { 
         WithData("name", name);
     }

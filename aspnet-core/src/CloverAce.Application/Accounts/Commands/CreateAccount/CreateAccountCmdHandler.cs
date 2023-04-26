@@ -2,6 +2,7 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp.AutoMapper;
 
 namespace CloverAce.Accounts.Commands.CreateAccount
 {
@@ -14,21 +15,23 @@ namespace CloverAce.Accounts.Commands.CreateAccount
         public CreateAccountCmdHandler(
             IAccountRepository accountRepository, 
             AccountManager accountManager, 
-            IMapper mapper)
+            IMapperAccessor mapper)
         {
             _accountRepository = accountRepository;
             _accountManager = accountManager;
-            _mapper = mapper;
+            _mapper = mapper.Mapper;
         }
 
         public async Task<CreateAccountCmdResponse> Handle(CreateAccountCmd request, CancellationToken cancellationToken)
         {
-            var account = await _accountRepository.InsertAsync(
-                await _accountManager.CreateAsync(request.Name), 
+            var account = await _accountManager.CreateAsync(request.Name);
+
+            var newAccount = await _accountRepository.InsertAsync(
+                account, 
                 autoSave: true, 
                 cancellationToken);
 
-            return new CreateAccountCmdResponse { Account = _mapper.Map<AccountDto>(account) };
+            return new CreateAccountCmdResponse { Account = _mapper.Map<AccountDto>(newAccount) };
         }
     }
 }

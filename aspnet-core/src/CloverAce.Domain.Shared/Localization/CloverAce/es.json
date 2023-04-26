@@ -1,8 +1,9 @@
 {
-  "culture": "es",
-  "texts": {
+  "Culture": "es",
+  "Texts": {
     "Menu:Home": "Inicio",
     "Welcome": "Bienvenido",
-    "LongWelcomeMessage": "Bienvenido a la aplicación, este es un proyecto base basado en el framework ABP. Para más información, visita abp.io."
+    "LongWelcomeMessage": "Bienvenido a la aplicación, este es un proyecto base basado en el framework ABP. Para más información, visita abp.io.",
+    "Account:00001": "Ya existe una cuenta con el mismo nombre: {name}"
   }
 }

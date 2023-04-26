@@ -1,4 +1,5 @@
 ﻿using CloverAce.Localization;
+using MediatR;
 using Volo.Abp.AspNetCore.Mvc;
 
 namespace CloverAce.Controllers;
@@ -7,8 +8,11 @@ namespace CloverAce.Controllers;
  */
 public abstract class CloverAceController : AbpControllerBase
 {
-    protected CloverAceController()
+    protected readonly IMediator Mediator;
+
+    protected CloverAceController(IMediator mediator)
     {
+        Mediator = mediator;
         LocalizationResource = typeof(CloverAceResource);
     }
 }
