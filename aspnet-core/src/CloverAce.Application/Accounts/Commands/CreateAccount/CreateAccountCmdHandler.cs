@@ -26,12 +26,12 @@ namespace CloverAce.Accounts.Commands.CreateAccount
         {
             var account = await _accountManager.CreateAsync(request.Name);
 
-            var newAccount = await _accountRepository.InsertAsync(
+            await _accountRepository.InsertAsync(
                 account, 
                 autoSave: true, 
                 cancellationToken);
 
-            return new CreateAccountCmdResponse { Account = _mapper.Map<AccountDto>(newAccount) };
+            return new CreateAccountCmdResponse { Account = _mapper.Map<AccountDto>(account) };
         }
     }
 }
