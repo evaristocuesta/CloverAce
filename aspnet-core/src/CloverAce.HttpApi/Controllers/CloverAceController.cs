@@ -1,5 +1,7 @@
 ﻿using CloverAce.Localization;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using Volo.Abp.AspNetCore.Mvc;
 
 namespace CloverAce.Controllers;
@@ -8,11 +10,13 @@ namespace CloverAce.Controllers;
  */
 public abstract class CloverAceController : AbpControllerBase
 {
-    protected readonly IMediator Mediator;
-
-    protected CloverAceController(IMediator mediator)
+    protected CloverAceController(IServiceProvider serviceProvider)
     {
-        Mediator = mediator;
+        ServiceProvider = serviceProvider;
+        Mediator = serviceProvider.GetService<IMediator>();
         LocalizationResource = typeof(CloverAceResource);
     }
+
+    protected IServiceProvider ServiceProvider { get; }
+    protected IMediator Mediator { get; }
 }
