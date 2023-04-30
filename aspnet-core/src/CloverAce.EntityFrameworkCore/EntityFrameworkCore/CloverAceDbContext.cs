@@ -83,7 +83,8 @@ public class CloverAceDbContext :
         {
             b.ToTable(CloverAceConsts.DbTablePrefix + "Accounts", CloverAceConsts.DbSchema);
             b.ConfigureByConvention(); //auto configure for the base class props
-            b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+            b.Property(x => x.Name).IsRequired().HasMaxLength(AccountsConsts.MaxNameLength);
+            b.HasIndex(x => x.Name);
         });
     }
 }

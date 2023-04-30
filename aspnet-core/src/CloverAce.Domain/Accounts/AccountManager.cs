@@ -16,7 +16,7 @@ public class AccountManager : DomainService
 
     public async Task<Account> CreateAsync([NotNull] string name)
     {
-        Check.NotNullOrWhiteSpace(name, nameof(name));
+        Check.NotNullOrWhiteSpace(name, nameof(name), maxLength: AccountsConsts.MaxNameLength);
 
         var accountExists = await _accountRepository.ExistsAsync(name);
 
@@ -31,7 +31,7 @@ public class AccountManager : DomainService
     public async Task ChangeNameAsync([NotNull] Account account, [NotNull] string name)
     {
         Check.NotNull(account, nameof(account));
-        Check.NotNullOrWhiteSpace(name, nameof(name));
+        Check.NotNullOrWhiteSpace(name, nameof(name), maxLength: AccountsConsts.MaxNameLength);
 
         var existingAccount = await _accountRepository.ExistsOtherAsync(account.Id, name);
 
