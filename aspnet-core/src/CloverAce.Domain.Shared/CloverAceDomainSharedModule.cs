@@ -53,6 +53,7 @@ public class CloverAceDomainSharedModule : AbpModule
         Configure<AbpExceptionLocalizationOptions>(options =>
         {
             options.MapCodeNamespace("CloverAce", typeof(CloverAceResource));
+            options.MapCodeNamespace("Account", typeof(CloverAceResource));
         });
     }
 }

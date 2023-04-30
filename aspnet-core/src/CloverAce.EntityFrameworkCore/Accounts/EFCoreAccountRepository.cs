@@ -7,9 +7,9 @@ using Volo.Abp.EntityFrameworkCore;
 
 namespace CloverAce.Accounts;
 
-public class AccountRepository : EfCoreRepository<CloverAceDbContext, Account, Guid>, IAccountRepository
+public class EFCoreAccountRepository : EfCoreRepository<CloverAceDbContext, Account, Guid>, IAccountRepository
 {
-    public AccountRepository(IDbContextProvider<CloverAceDbContext> dbContextProvider) 
+    public EFCoreAccountRepository(IDbContextProvider<CloverAceDbContext> dbContextProvider) 
         : base(dbContextProvider)
     {
     }
@@ -17,12 +17,12 @@ public class AccountRepository : EfCoreRepository<CloverAceDbContext, Account, G
     public async Task<bool> ExistsAsync(string name)
     {
         var accounts = await GetDbSetAsync();
-        return await accounts.AnyAsync(x => x.Name == name);
+        return await accounts.AnyAsync(x => x.Name.Equals(name));
     }
 
     public async Task<bool> ExistsOtherAsync(Guid id, string name)
     {
         var accounts = await GetDbSetAsync();
-        return await accounts.AnyAsync(x => x.Id != id && x.Name == name);
+        return await accounts.AnyAsync(x => x.Id != id && x.Name.Equals(name));
     }
 }

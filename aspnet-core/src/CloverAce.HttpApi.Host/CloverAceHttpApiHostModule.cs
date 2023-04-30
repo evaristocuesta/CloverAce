@@ -23,11 +23,11 @@ using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
-using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CloverAce;
 
@@ -69,6 +69,13 @@ public class CloverAceHttpApiHostModule : AbpModule
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
         ConfigureSwaggerServices(context, configuration);
+        ConfigureMediatR(context);
+    }
+
+    private static void ConfigureMediatR(ServiceConfigurationContext context)
+    {
+        context.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(
+            typeof(CloverAceApplicationModule).Assembly));
     }
 
     private static void ConfigureAuthentication(ServiceConfigurationContext context)

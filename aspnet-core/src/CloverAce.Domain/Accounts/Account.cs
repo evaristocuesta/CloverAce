@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System;
+using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace CloverAce.Accounts;
@@ -15,6 +16,9 @@ public class Account : FullAuditedAggregateRoot<Guid>
 
     internal Account(Guid id, [NotNull] string name) : base(id) 
     {
-        Name = name;
+        Name = Check.NotNullOrWhiteSpace(
+            name, 
+            nameof(name), 
+            maxLength: AccountsConsts.MaxNameLength);
     }
 }
