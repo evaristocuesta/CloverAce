@@ -7,9 +7,9 @@ using Volo.Abp.EntityFrameworkCore;
 
 namespace CloverAce.Accounts;
 
-public class AccountRepository : EfCoreRepository<CloverAceDbContext, Account, Guid>, IAccountRepository
+public class EFCoreAccountRepository : EfCoreRepository<CloverAceDbContext, Account, Guid>, IAccountRepository
 {
-    public AccountRepository(IDbContextProvider<CloverAceDbContext> dbContextProvider) 
+    public EFCoreAccountRepository(IDbContextProvider<CloverAceDbContext> dbContextProvider) 
         : base(dbContextProvider)
     {
     }
