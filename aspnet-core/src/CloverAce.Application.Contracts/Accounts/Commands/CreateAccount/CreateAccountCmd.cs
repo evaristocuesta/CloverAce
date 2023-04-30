@@ -1,9 +1,8 @@
 ﻿using MediatR;
+using System;
 
-namespace CloverAce.Accounts.Commands.CreateAccount
+namespace CloverAce.Accounts.Commands.CreateAccount;
+
+public class CreateAccountCmd : CreateOrUpdateAccountDto, IRequest<CreateAccountCmdResponse>
 {
-    public class CreateAccountCmd : IRequest<CreateAccountCmdResponse>
-    {
-        public string Name { get; set; }
-    }
 }

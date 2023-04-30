@@ -1,7 +1,5 @@
-﻿namespace CloverAce.Accounts.Commands.CreateAccount
+﻿namespace CloverAce.Accounts.Commands.CreateAccount;
+
+public class CreateAccountCmdResponse : AccountDto
 {
-    public class CreateAccountCmdResponse
-    {
-        public AccountDto Account { get; set; }
-    }
 }

@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Domain.Services;
@@ -14,11 +15,11 @@ public class AccountManager : DomainService
         _accountRepository = accountRepository;
     }
 
-    public async Task<Account> CreateAsync([NotNull] string name)
+    public async Task<Account> CreateAsync([NotNull] string name, CancellationToken cancellationToken)
     {
         Check.NotNullOrWhiteSpace(name, nameof(name), maxLength: AccountsConsts.MaxNameLength);
 
-        var accountExists = await _accountRepository.ExistsAsync(name);
+        var accountExists = await _accountRepository.ExistsAsync(name, cancellationToken);
 
         if (accountExists)
         {
@@ -28,12 +29,12 @@ public class AccountManager : DomainService
         return new Account(GuidGenerator.Create(), name);
     }
 
-    public async Task ChangeNameAsync([NotNull] Account account, [NotNull] string name)
+    public async Task ChangeNameAsync([NotNull] Account account, [NotNull] string name, CancellationToken cancellationToken)
     {
         Check.NotNull(account, nameof(account));
         Check.NotNullOrWhiteSpace(name, nameof(name), maxLength: AccountsConsts.MaxNameLength);
 
-        var existingAccount = await _accountRepository.ExistsOtherAsync(account.Id, name);
+        var existingAccount = await _accountRepository.ExistsOtherAsync(account.Id, name, cancellationToken);
 
         if (existingAccount) 
         {

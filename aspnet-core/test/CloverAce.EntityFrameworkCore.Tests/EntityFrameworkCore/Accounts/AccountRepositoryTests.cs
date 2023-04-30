@@ -23,7 +23,7 @@ public class AccountRepositoryTests : CloverAceEntityFrameworkCoreTestBase
         await WithUnitOfWorkAsync(async () =>
         {
             // Act
-            var exists = await _accountRepository.ExistsAsync("ING Direct");
+            var exists = await _accountRepository.ExistsAsync("ING Direct", default);
 
             // Assert
             exists.ShouldBeTrue();
@@ -47,7 +47,7 @@ public class AccountRepositoryTests : CloverAceEntityFrameworkCoreTestBase
     {
         // Act
         var account = await _accountRepository.InsertAsync(
-            await _accountManager.CreateAsync("BBVA"), 
+            await _accountManager.CreateAsync("BBVA", default), 
             true);
 
         // Assert

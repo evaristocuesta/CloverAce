@@ -24,7 +24,7 @@ namespace CloverAce.Accounts.Commands.CreateAccount
 
         public async Task<CreateAccountCmdResponse> Handle(CreateAccountCmd request, CancellationToken cancellationToken)
         {
-            var account = await _accountManager.CreateAsync(request.Name);
+            var account = await _accountManager.CreateAsync(request.Name, cancellationToken);
 
             await _accountRepository.InsertAsync(
                 account, 
