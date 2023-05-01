@@ -1,5 +1,6 @@
 ﻿using CloverAce.Accounts;
 using CloverAce.Accounts.Commands.CreateAccount;
+using CloverAce.Accounts.Commands.DeleteAccount;
 using CloverAce.Accounts.Commands.UpdateAccount;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -33,13 +34,29 @@ public class AccountsController : CloverAceController
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AccountDto))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status504GatewayTimeout)]
-    public async Task<ActionResult<AccountDto>> Post(
+    public async Task<ActionResult<AccountDto>> Put(
         [FromBody] UpdateAccountCmd cmd,
         CancellationToken cancellationToken)
     {
         var response = await Mediator.Send(cmd, cancellationToken);
         return Ok(response);
+    }
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status504GatewayTimeout)]
+    public async Task<IActionResult> Delete(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken)
+    {
+        var cmd = new DeleteAccountCmd { AccountId =  id };
+        await Mediator.Send(cmd, cancellationToken);
+        return Ok();
     }
 }
