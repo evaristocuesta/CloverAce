@@ -26,8 +26,8 @@ public class CloverAceDataSeederContributor
         }
 
         _ = await _accountRepository.InsertAsync(
-            await _accountManager.CreateAsync("ING Direct"));
+            await _accountManager.CreateAsync("ING Direct", default));
         _ = await _accountRepository.InsertAsync(
-            await _accountManager.CreateAsync("Evo Bank"));
+            await _accountManager.CreateAsync("Evo Bank", default));
     }
 }

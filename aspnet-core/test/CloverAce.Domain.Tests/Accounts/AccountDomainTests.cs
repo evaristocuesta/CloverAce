@@ -19,7 +19,7 @@ public class AccountDomainTests : CloverAceDomainTestBase
     {
         await Assert.ThrowsAsync<AccountAlreadyExistsException>(async () =>
         {
-            await _accountManager.CreateAsync("ING Direct");
+            await _accountManager.CreateAsync("ING Direct", default);
         });
     }
 
@@ -27,7 +27,7 @@ public class AccountDomainTests : CloverAceDomainTestBase
     public async Task Should_Create_Account()
     {
         // Act
-        var account = await _accountManager.CreateAsync("BBVA");
+        var account = await _accountManager.CreateAsync("BBVA", default);
 
         // Assert
         account.ShouldNotBeNull();
@@ -41,10 +41,10 @@ public class AccountDomainTests : CloverAceDomainTestBase
         await Assert.ThrowsAsync<AccountAlreadyExistsException>(async () =>
         {
             // Arrange
-            var bbva = await _accountManager.CreateAsync("BBVA");
+            var bbva = await _accountManager.CreateAsync("BBVA", default);
 
             // Act
-            await _accountManager.ChangeNameAsync(bbva, "ING Direct");
+            await _accountManager.ChangeNameAsync(bbva, "ING Direct", default);
         });
     }
 
@@ -52,10 +52,10 @@ public class AccountDomainTests : CloverAceDomainTestBase
     public async Task Should_Change_Name_Account()
     {
         // Arrange
-        var bbva = await _accountManager.CreateAsync("BBVA");
+        var bbva = await _accountManager.CreateAsync("BBVA", default);
 
         // Act
-        await _accountManager.ChangeNameAsync(bbva, "Caixa Bank");
+        await _accountManager.ChangeNameAsync(bbva, "Caixa Bank", default);
 
         // Assert
         bbva.ShouldNotBeNull();

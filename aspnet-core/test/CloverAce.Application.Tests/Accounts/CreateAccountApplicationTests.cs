@@ -6,14 +6,14 @@ using Xunit;
 
 namespace CloverAce.Accounts;
 
-public class AccountApplicationTests : CloverAceApplicationTestBase
+public class CreateAccountApplicationTests : CloverAceApplicationTestBase
 {
     private readonly CreateAccountCmdHandler _createAccountCmdHandler;
     private readonly IAccountRepository _accountRepository;
     private readonly AccountManager _accountManager;
     private readonly IMapperAccessor _mapperAccessor;
 
-    public AccountApplicationTests()
+    public CreateAccountApplicationTests()
     {
         _accountRepository = GetRequiredService<IAccountRepository>();
         _accountManager = GetRequiredService<AccountManager>();
@@ -26,7 +26,7 @@ public class AccountApplicationTests : CloverAceApplicationTestBase
     }
 
     [Fact]
-    public async Task Shoul_Create_Account()
+    public async Task Should_Create_Account()
     {
         // Arrange
         var cmd = new CreateAccountCmd
@@ -38,12 +38,12 @@ public class AccountApplicationTests : CloverAceApplicationTestBase
         var response = await _createAccountCmdHandler.Handle(cmd, default);
 
         // Assert
-        response.Account.ShouldNotBeNull();
-        response.Account.Name.ShouldBe(cmd.Name);
+        response.ShouldNotBeNull();
+        response.Name.ShouldBe(cmd.Name);
     }
 
     [Fact]
-    public async Task Shoul_Not_Allow_To_Create_Duplicate_Account()
+    public async Task Should_Not_Allow_To_Create_Duplicate_Account()
     {
         await Assert.ThrowsAsync<AccountAlreadyExistsException>(async () =>
         {
