@@ -26,7 +26,7 @@ public class CreateAccountApplicationTests : CloverAceApplicationTestBase
     }
 
     [Fact]
-    public async Task Shoul_Create_Account()
+    public async Task Should_Create_Account()
     {
         // Arrange
         var cmd = new CreateAccountCmd
@@ -43,7 +43,7 @@ public class CreateAccountApplicationTests : CloverAceApplicationTestBase
     }
 
     [Fact]
-    public async Task Shoul_Not_Allow_To_Create_Duplicate_Account()
+    public async Task Should_Not_Allow_To_Create_Duplicate_Account()
     {
         await Assert.ThrowsAsync<AccountAlreadyExistsException>(async () =>
         {
