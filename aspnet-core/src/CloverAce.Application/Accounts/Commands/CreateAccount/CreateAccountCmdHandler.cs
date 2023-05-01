@@ -6,7 +6,7 @@ using Volo.Abp.AutoMapper;
 
 namespace CloverAce.Accounts.Commands.CreateAccount
 {
-    public class CreateAccountCmdHandler : IRequestHandler<CreateAccountCmd, CreateAccountCmdResponse>
+    public class CreateAccountCmdHandler : IRequestHandler<CreateAccountCmd, AccountDto>
     {
         private readonly IAccountRepository _accountRepository;
         private readonly AccountManager _accountManager;
@@ -22,7 +22,7 @@ namespace CloverAce.Accounts.Commands.CreateAccount
             _mapper = mapper.Mapper;
         }
 
-        public async Task<CreateAccountCmdResponse> Handle(CreateAccountCmd request, CancellationToken cancellationToken)
+        public async Task<AccountDto> Handle(CreateAccountCmd request, CancellationToken cancellationToken)
         {
             var account = await _accountManager.CreateAsync(request.Name, cancellationToken);
 
@@ -31,7 +31,7 @@ namespace CloverAce.Accounts.Commands.CreateAccount
                 autoSave: true, 
                 cancellationToken);
 
-            return new CreateAccountCmdResponse { Account = _mapper.Map<AccountDto>(account) };
+            return _mapper.Map<AccountDto>(account);
         }
     }
 }

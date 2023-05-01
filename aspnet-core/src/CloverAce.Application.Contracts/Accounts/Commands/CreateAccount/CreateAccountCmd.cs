@@ -3,6 +3,6 @@ using System;
 
 namespace CloverAce.Accounts.Commands.CreateAccount;
 
-public class CreateAccountCmd : CreateOrUpdateAccountDto, IRequest<CreateAccountCmdResponse>
+public class CreateAccountCmd : CreateOrUpdateAccountDto, IRequest<AccountDto>
 {
 }

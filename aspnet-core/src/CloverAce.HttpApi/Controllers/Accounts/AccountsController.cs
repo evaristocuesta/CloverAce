@@ -24,25 +24,22 @@ namespace CloverAce.Controllers.Accounts
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status504GatewayTimeout)]
         public async Task<ActionResult<AccountDto>> Post(
-            [FromBody] CreateOrUpdateAccountDto dto, 
+            [FromBody] CreateAccountCmd cmd, 
             CancellationToken cancellationToken)
         {
-            var response = await Mediator.Send((CreateAccountCmd)dto, cancellationToken);
-            return Ok(response.Account);
+            var response = await Mediator.Send(cmd, cancellationToken);
+            return Ok(response);
         }
 
-        [HttpPut("{accountId}")]
+        [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AccountDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status504GatewayTimeout)]
         public async Task<ActionResult<AccountDto>> Post(
-            [FromRoute] Guid accountId, 
-            [FromBody] CreateOrUpdateAccountDto dto, 
+            [FromBody] UpdateAccountCmd cmd, 
             CancellationToken cancellationToken)
         {
-            var cmd = (UpdateAccountCmd)dto;
-            cmd.AccountId = accountId;
             var response = await Mediator.Send(cmd, cancellationToken);
             return Ok(response);
         }

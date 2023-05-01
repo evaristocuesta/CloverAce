@@ -6,7 +6,7 @@ using Volo.Abp.AutoMapper;
 
 namespace CloverAce.Accounts.Commands.UpdateAccount;
 
-public class UpdateAccountCmdHandler : IRequestHandler<UpdateAccountCmd, UpdateAccountCmdResponse>
+public class UpdateAccountCmdHandler : IRequestHandler<UpdateAccountCmd, AccountDto>
 {
     private readonly IAccountRepository _accountRepository;
     private readonly AccountManager _accountManager;
@@ -22,11 +22,11 @@ public class UpdateAccountCmdHandler : IRequestHandler<UpdateAccountCmd, UpdateA
         _mapper = mapper.Mapper;
     }
 
-    public async Task<UpdateAccountCmdResponse> Handle(UpdateAccountCmd request, CancellationToken cancellationToken)
+    public async Task<AccountDto> Handle(UpdateAccountCmd request, CancellationToken cancellationToken)
     {
         var account = await _accountRepository.GetAsync(request.AccountId, includeDetails: false, cancellationToken);
         await _accountManager.ChangeNameAsync(account, request.Name, cancellationToken);
         await _accountRepository.UpdateAsync(account, autoSave: true, cancellationToken);
-        return new UpdateAccountCmdResponse { Account = _mapper.Map<AccountDto>(account) };
+        return _mapper.Map<AccountDto>(account);
     }
 }
